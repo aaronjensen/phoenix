@@ -141,6 +141,7 @@ defmodule Phoenix.Controller.Pipeline do
         end
       end
 
+      @dialyzer({:no_match, phoenix_controller_pipeline: 2})
       defp phoenix_controller_pipeline(unquote(conn), var!(action)) do
         var!(conn) = unquote(conn)
         var!(controller) = __MODULE__

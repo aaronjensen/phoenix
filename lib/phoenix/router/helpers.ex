@@ -139,6 +139,7 @@ defmodule Phoenix.Router.Helpers do
       @doc """
       Generates url to a static asset given its file path.
       """
+      @dialyzer({:no_match, static_url: 2})
       def static_url(%Conn{private: private} = conn, path) do
         static_url(private.phoenix_endpoint, path)
       end

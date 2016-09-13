@@ -299,12 +299,14 @@ defmodule Phoenix.Router do
     # @anno is used here to avoid warnings if forwarding to root path
     match_404 =
       quote @anno do
+        @dialyzer({:no_match, match_route: 4})
         defp match_route(conn, _method, _path_info, _host) do
           raise NoRouteError, conn: conn, router: __MODULE__
         end
       end
 
     quote do
+      @dialyzer({:no_match, do_call: 2})
       defp do_call(%Plug.Conn{private: %{phoenix_bypass: {__MODULE__, pipes}}} = conn, _opts) do
         Phoenix.Router.__bypass__(conn, __MODULE__, pipes)
       end
@@ -404,6 +406,7 @@ defmodule Phoenix.Router do
       quote unquote: false do
         Scope.pipeline(__MODULE__, plug)
         {conn, body} = Plug.Builder.compile(__ENV__, @phoenix_pipeline, [])
+        @dialyzer({:no_match, {plug, 2}})
         def unquote(plug)(unquote(conn), _) do
           try do
             unquote(body)

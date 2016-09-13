@@ -609,6 +609,7 @@ defmodule Phoenix.Endpoint do
         end
       end
 
+      @dialyzer({:no_match, phoenix_pipeline: 1})
       defp phoenix_pipeline(unquote(conn)), do: unquote(body)
 
       @doc """
